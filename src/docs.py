@@ -103,11 +103,10 @@ def main(wf):
         subtitle = wrap(result["body_safe"], width=75)[0]
         if len(result["body_safe"]) > 75:
             subtitle += " ..."
-        # if result["locale"]
         wf.add_item(
-            uid=result["title"],
+            uid=result["id"],
             title=result["title"],
-            # subtitle=subtitle,
+            subtitle=result["body_safe"],
             arg=Config.ZENDESK_KB_SLUG+result["id"],
             valid=True,
             largetext=result["title"],
@@ -122,7 +121,7 @@ def main(wf):
 
 if __name__ == "__main__":
     wf = Workflow3(
-        update_settings={"github_slug": "techouse/alfred-flask-docs", "frequency": 7}
+        update_settings={"github_slug": "saintsaens/alfred-zendesk-docs", "frequency": 7}
     )
     log = wf.logger
     sys.exit(wf.run(main))
