@@ -1,38 +1,24 @@
-# Flask Docs Workflow for Alfred
+# Zendesk Guide workflow for Alfred
 
-![GitHub release](https://img.shields.io/github/release/techouse/alfred-flask-docs.svg)
-![GitHub All Releases](https://img.shields.io/github/downloads/techouse/alfred-flask-docs/total.svg)
-![GitHub](https://img.shields.io/github/license/techouse/alfred-flask-docs.svg)
+Search a Zendesk knowledge base with an Algolia search using Alfred.
 
-Search the [Flask documentation](http://flask.pocoo.org/docs/1.0/) using [Alfred](https://www.alfredapp.com/). 
-
-![demo](demo.gif)
+![CleanShot 2021-06-07 at 22 05 23](https://user-images.githubusercontent.com/7119880/121081070-800cff00-c7dc-11eb-9a57-afdf23d22050.gif)
 
 ## Installation
 
-1. [Download the latest version](https://github.com/techouse/alfred-flask-docs/releases/latest)
-2. Install the workflow by double-clicking the `.alfredworkflow` file
-3. You can add the workflow to a category, then click "Import" to finish importing. You'll now see the workflow listed in the left sidebar of your Workflows preferences pane.
+1. Download the latest version
+2. Double click on the `.alfredworkflow` file
 
 ## Usage
 
-Just type `flask` followed by your search query.
+Type `kben` followed by your search query.
 
 ```
-flask jsonify
+kben create
 ```
 
-Either press `⌘Y` to Quick Look the result, or press `<enter>` to open it in your web browser.
+Hit `⇧` to quick view the result, or hit `↵` to open the page in your browser.
 
-## Supported Branches
+## Note
 
-Currently the app indexes branch __1.0__ only.
-
-### Note
-
-Built using [Alfred-Workflow](https://github.com/deanishe/alfred-workflow).
-The lightning fast search is powered by [Algolia](https://www.algolia.com) which was generous enough to hand me a big 
-enough plan for all these Alfred Workflows.
-A big thank you to [@redox](https://github.com/redox) from [@algolia](https://github.com/algolia) :innocent: :beers: :heart:
-
-The index for Algolia was compiled from the Flask Sphinx HTML documentation using a [simple Python script](https://github.com/techouse/flask-docs-parser) I wrote.
+Built using [Flask Docs Workflow for Alfred](https://github.com/techouse/alfred-flask-docs). Search is powered by [Algolia](https://www.algolia.com/).
