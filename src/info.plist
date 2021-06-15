@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>bundleid</key>
-	<string>org.techouse.flask-docs</string>
+	<string></string>
 	<key>category</key>
-	<string>Internet</string>
+	<string>Productivity</string>
 	<key>connections</key>
 	<dict>
 		<key>9CD5E9DE-7116-4632-91A8-1CA381F10126</key>
@@ -23,13 +23,13 @@
 		</array>
 	</dict>
 	<key>createdby</key>
-	<string>Klemen Tušar</string>
+	<string>Flavien</string>
 	<key>description</key>
-	<string>Search the Flask documentation</string>
+	<string>Search a Zendesk documentation</string>
 	<key>disabled</key>
 	<false/>
 	<key>name</key>
-	<string>Flask Docs</string>
+	<string>360Learning KB (EN)</string>
 	<key>objects</key>
 	<array>
 		<dict>
@@ -48,7 +48,7 @@
 				<key>escaping</key>
 				<integer>102</integer>
 				<key>keyword</key>
-				<string>flask</string>
+				<string>kben</string>
 				<key>queuedelaycustom</key>
 				<integer>3</integer>
 				<key>queuedelayimmediatelyinitially</key>
@@ -66,9 +66,9 @@
 				<key>scriptfile</key>
 				<string></string>
 				<key>subtext</key>
-				<string>Everything you need to know about Flask</string>
+				<string>Everything you need to know about 360Learning</string>
 				<key>title</key>
-				<string>Search the Flask documentation</string>
+				<string>Search the 360Learning documentation</string>
 				<key>type</key>
 				<integer>0</integer>
 				<key>withspace</key>
@@ -102,29 +102,40 @@
 		</dict>
 	</array>
 	<key>readme</key>
-	<string>Search the Flask documentation using Alfred</string>
+	<string>Search the 360Learning KB using Alfred</string>
 	<key>uidata</key>
 	<dict>
 		<key>0A7A05D1-2AA4-458A-85FF-9F1C225796EE</key>
 		<dict>
 			<key>xpos</key>
-			<integer>880</integer>
+			<integer>520</integer>
 			<key>ypos</key>
-			<integer>170</integer>
+			<integer>160</integer>
 		</dict>
 		<key>9CD5E9DE-7116-4632-91A8-1CA381F10126</key>
 		<dict>
 			<key>xpos</key>
-			<integer>550</integer>
+			<integer>190</integer>
 			<key>ypos</key>
-			<integer>170</integer>
+			<integer>160</integer>
 		</dict>
 	</dict>
-	<key>variablesdontexport</key>
-	<array/>
+	<key>variables</key>
+	<dict>
+		<key>ALGOLIA_APP_ID</key>
+		<string>QR31Y9ZVV9</string>
+		<key>ALGOLIA_SEARCH_INDEX</key>
+		<string>zendesk_360learning_articles</string>
+		<key>ALGOLIA_SEARCH_ONLY_API_KEY</key>
+		<string>04393fdb691165e56bc5012da660594c</string>
+		<key>ZENDESK_KB_NAME</key>
+		<string>360Learning</string>
+		<key>ZENDESK_KB_SLUG</key>
+		<string>https://support.360learning.com/hc/en-us/articles/</string>
+	</dict>
 	<key>version</key>
-	<string>1.0.5</string>
+	<string>1.0.0</string>
 	<key>webaddress</key>
-	<string>https://github.com/techouse</string>
+	<string></string>
 </dict>
 </plist>

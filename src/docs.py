@@ -35,7 +35,7 @@ def handle_result(api_dict):
     """Extract relevant info from API result"""
     result = {}
 
-    for key in {"id", "title", "permalink", "default", "content"}:
+    for key in {"title", "id", "body_safe", "locale"}:
         result[key] = api_dict[key]
 
     return result
@@ -50,19 +50,19 @@ def search(query=None, limit=Config.RESULT_COUNT):
 
 
 def main(wf):
-    if wf.update_available:
+    # if wf.update_available:
         # Add a notification to top of Script Filter results
-        wf.add_item(
-            "New version available",
-            "Action this item to install the update",
-            autocomplete="workflow:update",
-            icon=ICON_INFO,
-        )
+    #     wf.add_item(
+    #         "New version available",
+    #         "Action this item to install the update",
+    #         autocomplete="workflow:update",
+    #         icon=ICON_INFO,
+    #     )
 
     query = wf.args[0].strip()
 
     if not query:
-        wf.add_item("Search the Flask docs...")
+        wf.add_item("Search the " + Config.ZENDESK_KB_NAME + " docs...")
         wf.send_feedback()
         return 0
 
@@ -87,7 +87,7 @@ def main(wf):
     # Show results
     if not results:
         url = "https://www.google.com/search?q={}".format(
-            quote_plus("Flask {}".format(query))
+            quote_plus(Config.ZENDESK_KB_NAME + " {}".format(query))
         )
         wf.add_item(
             "No matching answers found",
@@ -100,20 +100,20 @@ def main(wf):
         )
 
     for result in results:
-        subtitle = wrap(result["content"], width=75)[0]
-        if len(result["content"]) > 75:
+        subtitle = wrap(result["body_safe"], width=75)[0]
+        if len(result["body_safe"]) > 75:
             subtitle += " ..."
-
+        # if result["locale"]
         wf.add_item(
-            uid=result["id"],
-            title=result["id"],
-            subtitle=subtitle,
-            arg=result["permalink"],
+            uid=result["title"],
+            title=result["title"],
+            # subtitle=subtitle,
+            arg=Config.ZENDESK_KB_SLUG+result["id"],
             valid=True,
             largetext=result["title"],
-            copytext=result["permalink"],
-            quicklookurl=result["permalink"],
-            icon=Config.FLASK_ICON,
+            copytext=Config.ZENDESK_KB_SLUG+result["id"],
+            quicklookurl=Config.ZENDESK_KB_SLUG+result["id"],
+            icon=Config.THREESIX_ICON,
         )
         # log.debug(result)
 
