@@ -35,7 +35,7 @@ def handle_result(api_dict):
     """Extract relevant info from API result"""
     result = {}
 
-    for key in {"title", "id", "body_safe", "locale"}:
+    for key in {"title", "id", "body_safe", "locale", "section"}:
         result[key] = api_dict[key]
 
     return result
@@ -50,14 +50,14 @@ def search(query=None, limit=Config.RESULT_COUNT):
 
 
 def main(wf):
-    # if wf.update_available:
+    if wf.update_available:
         # Add a notification to top of Script Filter results
-    #     wf.add_item(
-    #         "New version available",
-    #         "Action this item to install the update",
-    #         autocomplete="workflow:update",
-    #         icon=ICON_INFO,
-    #     )
+         wf.add_item(
+             "New version available",
+             "Action this item to install the update",
+             autocomplete="workflow:update",
+             icon=ICON_INFO,
+         )
 
     query = wf.args[0].strip()
 
@@ -82,7 +82,7 @@ def main(wf):
         )
     ]
 
-    # log.debug("{} results for {!r}".format(len(results), query))
+    log.debug("{} results for {!r}".format(len(results), query))
 
     # Show results
     if not results:
@@ -100,21 +100,27 @@ def main(wf):
         )
 
     for result in results:
+        # Use this value of subtitle if you want to display the contents of the article.
         subtitle = wrap(result["body_safe"], width=75)[0]
         if len(result["body_safe"]) > 75:
             subtitle += " ..."
-        wf.add_item(
-            uid=result["id"],
-            title=result["title"],
-            subtitle=result["body_safe"],
-            arg=Config.ZENDESK_KB_SLUG+result["id"],
-            valid=True,
-            largetext=result["title"],
-            copytext=Config.ZENDESK_KB_SLUG+result["id"],
-            quicklookurl=Config.ZENDESK_KB_SLUG+result["id"],
-            icon=Config.THREESIX_ICON,
-        )
-        # log.debug(result)
+
+        # Display only articles in English.
+        if result["locale"]["locale"] == "en-us":
+            wf.add_item(
+                uid=result["id"],
+                title=result["title"],
+
+                # Show the full path in the subtitle.
+                subtitle=result["section"]["full_path"],
+                arg=Config.ZENDESK_KB_SLUG+result["id"],
+                valid=True,
+                largetext=result["title"],
+                copytext=Config.ZENDESK_KB_SLUG+result["id"],
+                quicklookurl=Config.ZENDESK_KB_SLUG+result["id"],
+                icon=Config.THREESIX_ICON,
+            )
+        log.debug(result)
 
     wf.send_feedback()
 
