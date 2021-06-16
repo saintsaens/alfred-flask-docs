@@ -36,15 +36,15 @@ def handle_result(api_dict):
 
     return result
 
-def filter_english_results(articles):
+def filter_results_by_language(articles):
     """Filter articles that have locale en-us only"""
-    return [article for article in articles if article["locale"]["locale"] == "en-us"]
+    return [article for article in articles if article["locale"]["locale"] == Config.LOCALE]
 
 def search(query=None, limit=Config.RESULT_COUNT):
     if query:
         results = index.search(query, {"page": 0, "hitsPerPage": limit})
         if results is not None and "hits" in results:
-            return filter_english_results(results["hits"])
+            return filter_results_by_language(results["hits"])
     return []
 
 
@@ -76,18 +76,29 @@ def main(wf):
 
     # Show results
     if not results:
-        url = "https://www.google.com/search?q={}".format(
+        url_google = "https://www.google.com/search?q={}".format(
             quote_plus(Config.ZENDESK_KB_NAME + " {}".format(query))
         )
+        url_kb_search_results = "https://support.360learning.com/hc/en-us/search?query={}".format(
+            quote_plus("{}".format(query))
+        )
         wf.add_item(
-            "No matching answers found",
-            "Shall I try and search Google?",
+            "Display KB search results anyway for: {}".format(query),
             valid=True,
-            arg=url,
-            copytext=url,
-            quicklookurl=url,
+            arg=url_kb_search_results,
+            copytext=url_kb_search_results,
+            quicklookurl=url_kb_search_results,
+            icon=Config.THREESIX_ICON,
+        )
+        wf.add_item(
+            "Search Google for: {}".format(query),
+            valid=True,
+            arg=url_google,
+            copytext=url_google,
+            quicklookurl=url_google,
             icon=Config.GOOGLE_ICON,
         )
+
 
     for result in results:
         # Use this value of subtitle if you want to display the contents of the article.

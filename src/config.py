@@ -21,3 +21,6 @@ class Config(object):
     # Knowledge Base details
     ZENDESK_KB_NAME = os.getenv('ZENDESK_KB_NAME')
     ZENDESK_KB_SLUG = os.getenv('ZENDESK_KB_SLUG')
+
+    # Language for displayed results
+    LOCALE = os.getenv('LOCALE')
