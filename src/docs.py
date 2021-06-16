@@ -40,12 +40,15 @@ def handle_result(api_dict):
 
     return result
 
+def filter_english_results(articles):
+    """Filter articles that have locale en-us only"""
+    return [article for article in articles if article["locale"]["locale"] == "en-us"]
 
 def search(query=None, limit=Config.RESULT_COUNT):
     if query:
         results = index.search(query, {"page": 0, "hitsPerPage": limit})
         if results is not None and "hits" in results:
-            return results["hits"]
+            return filter_english_results(results["hits"])
     return []
 
 
@@ -104,22 +107,19 @@ def main(wf):
         subtitle = wrap(result["body_safe"], width=75)[0]
         if len(result["body_safe"]) > 75:
             subtitle += " ..."
+        wf.add_item(
+            uid=result["id"],
+            title=result["title"],
 
-        # Display only articles in English.
-        if result["locale"]["locale"] == "en-us":
-            wf.add_item(
-                uid=result["id"],
-                title=result["title"],
-
-                # Show the full path in the subtitle.
-                subtitle=result["section"]["full_path"],
-                arg=Config.ZENDESK_KB_SLUG+result["id"],
-                valid=True,
-                largetext=result["title"],
-                copytext=Config.ZENDESK_KB_SLUG+result["id"],
-                quicklookurl=Config.ZENDESK_KB_SLUG+result["id"],
-                icon=Config.THREESIX_ICON,
-            )
+            # Show the full path in the subtitle.
+            subtitle=result["section"]["full_path"],
+            arg=Config.ZENDESK_KB_SLUG+result["id"],
+            valid=True,
+            largetext=result["title"],
+            copytext=Config.ZENDESK_KB_SLUG+result["id"],
+            quicklookurl=Config.ZENDESK_KB_SLUG+result["id"],
+            icon=Config.THREESIX_ICON,
+        )
         log.debug(result)
 
     wf.send_feedback()
