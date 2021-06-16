@@ -17,9 +17,6 @@ from workflow import Workflow3, ICON_INFO
 client = SearchClient.create(Config.ALGOLIA_APP_ID, Config.ALGOLIA_SEARCH_ONLY_API_KEY)
 index = client.init_index(Config.ALGOLIA_SEARCH_INDEX)
 
-# log
-log = None
-
 
 def cache_key(query):
     """Make filesystem-friendly cache key"""
@@ -27,7 +24,6 @@ def cache_key(query):
     key = key.lower()
     key = re.sub(r"[^a-z0-9-_;.]", "-", key)
     key = re.sub(r"-+", "-", key)
-    # log.debug("Cache key : {!r} -> {!r}".format(query, key))
     return key
 
 
@@ -69,13 +65,6 @@ def main(wf):
         wf.send_feedback()
         return 0
 
-    # Parse query into query string and tags
-    words = query.split(" ")
-
-    query = " ".join(words)
-
-    log.debug("query : {!r}".format(query))
-
     key = cache_key(query)
 
     results = [
@@ -84,8 +73,6 @@ def main(wf):
             key, functools.partial(search, query), max_age=Config.CACHE_MAX_AGE
         )
     ]
-
-    log.debug("{} results for {!r}".format(len(results), query))
 
     # Show results
     if not results:
@@ -120,7 +107,6 @@ def main(wf):
             quicklookurl=Config.ZENDESK_KB_SLUG+result["id"],
             icon=Config.THREESIX_ICON,
         )
-        log.debug(result)
 
     wf.send_feedback()
 
@@ -129,5 +115,4 @@ if __name__ == "__main__":
     wf = Workflow3(
         update_settings={"github_slug": "saintsaens/alfred-zendesk-docs", "frequency": 7}
     )
-    log = wf.logger
     sys.exit(wf.run(main))
