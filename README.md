@@ -6,8 +6,9 @@ Search a Zendesk knowledge base with an Algolia search using Alfred.
 
 ## Installation
 
-1. Download the latest version
-2. Double click on the `.alfredworkflow` file
+1. On the top right, click `Code` > `Download ZIP`
+2. Unzip the downloaded file
+3. Double click on the `.alfredworkflow` file
 
 ## Usage
 
